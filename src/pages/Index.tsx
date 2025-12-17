@@ -9,9 +9,20 @@ interface Slide {
   title: string;
   content: string[];
   icon: string;
+  isTitleSlide?: boolean;
+  isFinalSlide?: boolean;
 }
 
 const restorationSlides: Slide[] = [
+  {
+    title: 'Современные виды реставрации',
+    icon: 'Presentation',
+    content: [
+      'Бондаренко Лилия',
+      'Группа Д-23'
+    ],
+    isTitleSlide: true
+  },
   {
     title: 'Введение в реставрацию',
     icon: 'Brush',
@@ -62,10 +73,28 @@ const restorationSlides: Slide[] = [
       'Развитие обратимых методов реставрации',
       'Международное сотрудничество и обмен опытом'
     ]
+  },
+  {
+    title: 'Спасибо за внимание',
+    icon: 'Heart',
+    content: [
+      'Бондаренко Лилия',
+      'Группа Д-23'
+    ],
+    isFinalSlide: true
   }
 ];
 
 const conservationSlides: Slide[] = [
+  {
+    title: 'Современные виды консервации',
+    icon: 'Presentation',
+    content: [
+      'Бондаренко Лилия',
+      'Группа Д-23'
+    ],
+    isTitleSlide: true
+  },
   {
     title: 'Введение в консервацию',
     icon: 'Shield',
@@ -117,6 +146,15 @@ const conservationSlides: Slide[] = [
       'Цифровая консервация: создание точных копий для будущих поколений',
       'Глобальные базы данных методик и результатов консервации'
     ]
+  },
+  {
+    title: 'Спасибо за внимание',
+    icon: 'Heart',
+    content: [
+      'Бондаренко Лилия',
+      'Группа Д-23'
+    ],
+    isFinalSlide: true
   }
 ];
 
@@ -213,32 +251,54 @@ const Index = () => {
 
       <main className="flex-1 flex items-center justify-center p-6">
         <div className="max-w-4xl w-full">
-          <div className="bg-card rounded-lg border border-border p-12 min-h-[500px] flex flex-col justify-between animate-fade-in">
-            <div>
-              <div className="flex items-center gap-4 mb-8">
-                <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
-                  <Icon name={slides[currentSlide].icon} size={28} className="text-primary" />
+          <div className="bg-card rounded-lg border border-border p-12 min-h-[500px] flex flex-col justify-center animate-fade-in">
+            {slides[currentSlide].isTitleSlide || slides[currentSlide].isFinalSlide ? (
+              <div className="text-center space-y-8">
+                <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto">
+                  <Icon name={slides[currentSlide].icon} size={40} className="text-primary" />
                 </div>
-                <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
+                <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground">
                   {slides[currentSlide].title}
                 </h2>
-              </div>
-              
-              <div className="space-y-4">
-                {slides[currentSlide].content.map((text, index) => (
-                  <div 
-                    key={index} 
-                    className="flex items-start gap-3 animate-slide-in-right"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
-                    <p className="text-lg text-foreground leading-relaxed">
+                <div className="space-y-4 pt-8">
+                  {slides[currentSlide].content.map((text, index) => (
+                    <p 
+                      key={index} 
+                      className="text-2xl text-muted-foreground animate-slide-in-right"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
                       {text}
                     </p>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
+            ) : (
+              <div>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className="w-14 h-14 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
+                    <Icon name={slides[currentSlide].icon} size={28} className="text-primary" />
+                  </div>
+                  <h2 className="font-heading text-3xl md:text-4xl font-bold text-foreground">
+                    {slides[currentSlide].title}
+                  </h2>
+                </div>
+                
+                <div className="space-y-4">
+                  {slides[currentSlide].content.map((text, index) => (
+                    <div 
+                      key={index} 
+                      className="flex items-start gap-3 animate-slide-in-right"
+                      style={{ animationDelay: `${index * 0.1}s` }}
+                    >
+                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0" />
+                      <p className="text-lg text-foreground leading-relaxed">
+                        {text}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="mt-8 flex items-center justify-between">
